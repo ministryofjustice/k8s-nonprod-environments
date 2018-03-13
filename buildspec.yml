@@ -21,6 +21,7 @@ phases:
     commands:
       - "ls -la"
       - "echo testbranch"
+      - "echo TESTBRANCH"
   #post_build:
     #commands:
       # - command
