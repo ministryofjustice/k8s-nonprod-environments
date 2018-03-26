@@ -20,7 +20,7 @@ phases:
        - "wget https://storage.googleapis.com/kubernetes-helm/helm-v2.8.2-linux-amd64.tar.gz -O helm.tar.gz; tar -xzf helm.tar.gz"
        - "chmod +x ./linux-amd64/helm"
        - "mv ./linux-amd64/helm /usr/local/bin/helm"
-       - "apt-get install gpa seahorse"
+       - "apt-get install gnupg"
 #       - "git clone https://github.com/AGWA/git-crypt.git"
 #       - "cd git-crypt; make; make install PREFIX=/usr/local; cd -"
   pre_build:
