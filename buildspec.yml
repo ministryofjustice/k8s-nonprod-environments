@@ -3,8 +3,8 @@ version: 0.2
 #env:
   #variables:
      # key: "value"
-  #parameter-store:
-     # key: "value"
+  parameter-store:
+     key: "key"
 
 phases:
   install:
@@ -20,12 +20,18 @@ phases:
        - "wget https://storage.googleapis.com/kubernetes-helm/helm-v2.8.2-linux-amd64.tar.gz -O helm.tar.gz; tar -xzf helm.tar.gz"
        - "chmod +x ./linux-amd64/helm"
        - "mv ./linux-amd64/helm /usr/local/bin/helm"
+       - "apt-get install gpa seahorse"
 #       - "git clone https://github.com/AGWA/git-crypt.git"
 #       - "cd git-crypt; make; make install PREFIX=/usr/local; cd -"
   pre_build:
     commands:
       - "mkdir ~/.kube/"
-      - "aws s3 cp s3://non-production-cluster-keystore/kubecfg.yaml ~/.kube/config" 
+      - "aws s3 cp s3://gpg-kubernetes/private.key ~/.private.key"
+      - "echo "$key" | gpg --import private.key"
+      - "gpg --list-keys"
+      - "git-crypt unlock"
+      - "cp ./cluster-authentication.key ~/.kube/config"
+      # - "aws s3 cp s3://non-production-cluster-keystore/kubecfg.yaml ~/.kube/config" 
   build:
     commands:
       - "kubectl config get-contexts"
