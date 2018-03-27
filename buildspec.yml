@@ -3,8 +3,9 @@ version: 0.2
 #env:
   #variables:
      # key: "value"
-  # parameter-store:
-    #  key: "value"
+  parameter-store:
+     kubernetes-private-key: "kubernetes-private-key"
+     kubernetes-key-pw: "kubernetes-key-pw"
     
 
 phases:
