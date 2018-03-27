@@ -4,8 +4,8 @@ version: 0.2
   #variables:
      # key: "value"
   parameter-store:
-     kubernetes-private-key: "kubernetes-private-key"
-     kubernetes-key-pw: "kubernetes-key-pw"
+     K8SKEY: "kubernetes-private-key"
+     K8SPW: "kubernetes-key-pw"
     
 
 phases:
@@ -28,7 +28,7 @@ phases:
   pre_build:
     commands:
       - "mkdir ~/.kube/"
-      - "cp ${kubernetes-private-key} ~/private.key"
+      - "cp $K8SKEY ~/private.key"
       # - "echo ${kubernetes-key-pw} | gpg --import ${kubernetes-private-key}"
       - "gpg --list-keys"
       - "git-crypt unlock"
