@@ -27,7 +27,8 @@ phases:
   pre_build:
     commands:
       - "mkdir ~/.kube/"
-      - "echo ${kubernetes-key-pw} | gpg --import ${kubernetes-private-key}"
+      - "cp ${kubernetes-private-key} ~/private.key"
+      # - "echo ${kubernetes-key-pw} | gpg --import ${kubernetes-private-key}"
       - "gpg --list-keys"
       - "git-crypt unlock"
       - "cp ./cluster-authentication.key ~/.kube/config"
