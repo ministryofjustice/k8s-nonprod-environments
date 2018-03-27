@@ -3,8 +3,9 @@ version: 0.2
 #env:
   #variables:
      # key: "value"
-  # parameter-store:
-  #    key: "value"
+  parameter-store:
+    #  key: "value"
+    
 
 phases:
   install:
@@ -26,8 +27,7 @@ phases:
   pre_build:
     commands:
       - "mkdir ~/.kube/"
-      - "aws s3 cp s3://gpg-kubernetes/private.key ~/.private.key"
-      - "echo ${key} | gpg --import private.key"
+      - "echo ${kubernetes-key-pw} | gpg --import ${kubernetes-private-key}"
       - "gpg --list-keys"
       - "git-crypt unlock"
       - "cp ./cluster-authentication.key ~/.kube/config"
