@@ -30,6 +30,7 @@ phases:
        - "cd .."
        - "pwd"
        - "ls -la"
+       - "git init"
        - "git-crypt unlock"
   pre_build:
     commands:
