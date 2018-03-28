@@ -23,13 +23,13 @@ phases:
        - "chmod +x ./linux-amd64/helm"
        - "mv ./linux-amd64/helm /usr/local/bin/helm"
        - "apt-get install gnupg"
-#       - "git clone https://github.com/AGWA/git-crypt.git"
-#       - "cd git-crypt; make; make install PREFIX=/usr/local; cd -"
+      - "git clone https://github.com/AGWA/git-crypt.git"
+      - "cd git-crypt; make; make install PREFIX=/usr/local; cd -"
   pre_build:
     commands:
       - "mkdir ~/.kube/"
       - "echo $K8SKEY > ~/private.key"
-      # - "echo $kubernetes-key-pw | gpg --import $kubernetes-private-key"
+      - "echo $kubernetes-key-pw | gpg --import ~/private.key"
       - "gpg --list-keys"
       - "git-crypt unlock"
       - "cp ./cluster-authentication.key ~/.kube/config"
