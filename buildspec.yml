@@ -25,9 +25,11 @@ phases:
        - "apt-get install gnupg"
        - "git clone https://github.com/AGWA/git-crypt.git"
        - "cd git-crypt"
+       - "echo git-crypt"
        - "make"
        - "make install PREFIX=/usr/local"
-       - "cd -"
+       - "cd ~"
+       - "echo home"
   pre_build:
     commands:
       - "mkdir ~/.kube/"
