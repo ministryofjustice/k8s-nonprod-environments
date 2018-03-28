@@ -29,7 +29,7 @@ phases:
     commands:
       - "mkdir ~/.kube/"
       - "echo $K8SKEY > ~/private.key"
-      - "echo $kubernetes-key-pw | gpg --import ~/private.key"
+      - "echo $kubernetes-key-pw > gpg --import ~/private.key"
       - "gpg --list-keys"
       - "git-crypt unlock"
       - "cp ./cluster-authentication.key ~/.kube/config"
