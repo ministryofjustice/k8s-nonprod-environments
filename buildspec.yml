@@ -29,7 +29,7 @@ phases:
        - "make install PREFIX=/usr/local"
        - "cd .."
        - "pwd"
-       - "ls"
+       - "ls -la"
        - "git-crypt unlock"
   pre_build:
     commands:
