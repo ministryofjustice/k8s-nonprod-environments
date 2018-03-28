@@ -36,7 +36,7 @@ phases:
       - "mkdir ~/.kube/"
       - "echo $K8SKEY > ~/private.key"
       - "gpg --list-keys"
-      - "echo $kubernetes-key-pw | gpg --batch --yes --import ~/private.key"
+      - "echo $kubernetes-key-pw > gpg --batch --yes --import ~/private.key"
       - "cat ~/private.key"
       - "gpg --list-keys"
       - "git-crypt unlock"
