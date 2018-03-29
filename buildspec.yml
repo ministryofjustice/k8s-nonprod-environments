@@ -1,10 +1,12 @@
 version: 0.2
 
-#env:
+env:
   #variables:
      # key: "value"
-  #parameter-store:
-     # key: "value"
+  parameter-store:
+     K8SKEY: "kubernetes-private-key"
+     K8SPW: "kubernetes-key-pw"
+    
 
 phases:
   install:
@@ -21,12 +23,27 @@ phases:
        - "wget https://storage.googleapis.com/kubernetes-helm/helm-v2.8.2-linux-amd64.tar.gz -O helm.tar.gz; tar -xzf helm.tar.gz"
        - "chmod +x ./linux-amd64/helm"
        - "mv ./linux-amd64/helm /usr/local/bin/helm"
-#       - "git clone https://github.com/AGWA/git-crypt.git"
-#       - "cd git-crypt; make; make install PREFIX=/usr/local; cd -"
+       - "apt-get install gnupg"
+       - "git clone https://github.com/AGWA/git-crypt.git"
+       - "cd git-crypt"
+       - "make"
+       - "make install PREFIX=/usr/local"
+       - "cd .."
+       - "pwd"
+       - "ls -la"
+       - "git init"
   pre_build:
     commands:
       - "mkdir ~/.kube/"
-      - "aws s3 cp s3://non-production-cluster-keystore/kubecfg.yaml ~/.kube/config" 
+      - "echo $K8SKEY"
+      - "echo $K8SKEY > ~/private.key"
+      - "cat ~/private.key"
+      - "gpg --list-keys"
+      - "echo $kubernetes-key-pw | gpg --import ~/private.key"
+      - "gpg --list-keys"
+      - "git-crypt unlock"
+      - "cp ./cluster-authentication.key ~/.kube/config"
+      # - "aws s3 cp s3://non-production-cluster-keystore/kubecfg.yaml ~/.kube/config" 
   build:
     commands:
       - "kubectl config get-contexts"
