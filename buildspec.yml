@@ -41,6 +41,8 @@ phases:
       - "gpg --list-keys"
       - "echo $kubernetes-key-pw | gpg --import ~/private.key"
       - "gpg --list-keys"
+      - "ls -a"
+      - "git-crypt version"
       - "git-crypt unlock"
       - "cp ./cluster-authentication.key ~/.kube/config"
       # - "aws s3 cp s3://non-production-cluster-keystore/kubecfg.yaml ~/.kube/config"
