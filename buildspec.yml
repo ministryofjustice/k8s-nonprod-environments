@@ -4,9 +4,9 @@ env:
   #variables:
      # key: "value"
   parameter-store:
-     K8SKEY: "kubernetes-private-key"
+     K8SS3URL: "K8s-Pipeline-GPG-S3"
      K8SPW: "kubernetes-key-pw"
-    
+
 
 phases:
   install:
@@ -35,15 +35,15 @@ phases:
   pre_build:
     commands:
       - "mkdir ~/.kube/"
-      - "echo $K8SKEY"
-      - "echo $K8SKEY > ~/private.key"
+      - "echo $K8SS3URL"
+      - "aws s3 cp $K8SS3URL ~/private.key"
       - "cat ~/private.key"
       - "gpg --list-keys"
       - "echo $kubernetes-key-pw | gpg --import ~/private.key"
       - "gpg --list-keys"
       - "git-crypt unlock"
       - "cp ./cluster-authentication.key ~/.kube/config"
-      # - "aws s3 cp s3://non-production-cluster-keystore/kubecfg.yaml ~/.kube/config" 
+      # - "aws s3 cp s3://non-production-cluster-keystore/kubecfg.yaml ~/.kube/config"
   build:
     commands:
       - "kubectl config get-contexts"
