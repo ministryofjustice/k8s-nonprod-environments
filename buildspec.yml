@@ -39,7 +39,7 @@ phases:
       - "aws s3 cp $K8SS3URL ~/private.key"
       - "cat ~/private.key"
       - "gpg --list-keys"
-      - "echo $kubernetes-key-pw | gpg --import ~/private.key"
+      - "echo $kubernetes-key-pw | gpg --batch --yes --import ~/private.key"
       - "gpg --list-keys"
       - "ls -a"
       - "git-crypt version"
