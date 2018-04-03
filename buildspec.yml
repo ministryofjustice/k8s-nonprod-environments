@@ -29,12 +29,12 @@ phases:
        - "cd .."
       #  - "pwd"
       #  - "ls -la"
-       - "git init"
+      #  - "git init"
   pre_build:
     commands:
       - "mkdir ~/.kube/"
       - "echo $K8SKEY | base64 --decode > ~/private.key"
-      - "cat ~/private.key"
+      - "git branch -a"
       # - "gpg --list-keys"
       # - "echo $kubernetes-key-pw | gpg --batch --yes --import ~/private.key"
       # - "gpg --list-keys"
