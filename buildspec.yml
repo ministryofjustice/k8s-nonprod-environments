@@ -4,16 +4,14 @@ env:
   #variables:
      # key: "value"
   parameter-store:
-     K8SS3URL: "K8s-Pipeline-GPG-S3"
-     K8SPW: "kubernetes-key-pw"
-
+     K8SKEY: "symkey-k8s-nonprod-env"
+    
 
 phases:
   install:
     commands:
        - "apt update"
-       - "apt install -y awscli git python3"
-#       - "pip install kubernetes"
+       - "apt install -y awscli git"
        - "wget https://github.com/kubernetes/kops/releases/download/1.8.0/kops-linux-amd64"
        - "chmod +x kops-linux-amd64"
        - "mv kops-linux-amd64 /usr/local/bin/kops"
@@ -29,23 +27,20 @@ phases:
        - "make"
        - "make install PREFIX=/usr/local"
        - "cd .."
-       - "pwd"
-       - "ls -la"
+      #  - "pwd"
+      #  - "ls -la"
        - "git init"
   pre_build:
     commands:
       - "mkdir ~/.kube/"
-      - "echo $K8SS3URL"
-      - "aws s3 cp $K8SS3URL ~/private.key"
+      - "echo $K8SKEY | base64 -D > ~/private.key"
       - "cat ~/private.key"
-      - "gpg --list-keys"
-      - "echo $kubernetes-key-pw | gpg --batch --yes --no-tty --import ~/private.key"
-      - "gpg --list-keys"
-      - "ls -a"
-      - "git-crypt version"
-      - "git-crypt unlock"
+      # - "gpg --list-keys"
+      # - "echo $kubernetes-key-pw | gpg --batch --yes --import ~/private.key"
+      # - "gpg --list-keys"
+      - "git-crypt unlock ~/private.key"
       - "cp ./cluster-authentication.key ~/.kube/config"
-      # - "aws s3 cp s3://non-production-cluster-keystore/kubecfg.yaml ~/.kube/config"
+      # - "aws s3 cp s3://non-production-cluster-keystore/kubecfg.yaml ~/.kube/config" 
   build:
     commands:
       - "kubectl config get-contexts"
@@ -53,8 +48,9 @@ phases:
       - "kubectl cluster-info"
       - "kubectl get namespaces"
       - "kubectl get pods --all-namespaces"
-      - "which python3"
-      - "python3 namespace.py"
+      - "ls namespaces/ | while read file; do kubectl create -f namespaces/$file/namespace.yaml; kubectl apply -f namespaces/$file --namespace=$file; done"
+#     - "kubectl delete namespaces dev"
+
   post_build:
     commands:
 #       - "ls namespaces/ | while read file; do helm init --service-account $file-tiller --tiller-namespace $file; done"
