@@ -27,13 +27,15 @@ phases:
        - "make"
        - "make install PREFIX=/usr/local"
        - "cd .."
-      #  - "pwd"
-      #  - "ls -la"
+       - "pwd"
+       - "ls -la"
       #  - "git init"
   pre_build:
     commands:
       - "mkdir ~/.kube/"
       - "echo $K8SKEY | base64 --decode > ~/private.key"
+      - "pwd"
+      - "ls -la"
       - "git branch -a"
       # - "gpg --list-keys"
       # - "echo $kubernetes-key-pw | gpg --batch --yes --import ~/private.key"
