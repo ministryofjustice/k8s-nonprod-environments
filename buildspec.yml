@@ -5,6 +5,7 @@ env:
      # key: "value"
   parameter-store:
      K8SKEY: "symkey-k8s-nonprod-env"
+     
     
 
 phases:
@@ -23,9 +24,9 @@ phases:
        - "mv ./linux-amd64/helm /usr/local/bin/helm"
        - "apt-get install gnupg"
        - "git init"
-       - "touch test"
-       - "git add ."
-       - "git commit -m \"test\""
+       - "git clone https://github.com/ministryofjustice/k8s-nonprod-environments.git"
+       - "cd k8s-nonprod-environments"
+       - "ls -la"
        - "git clone https://github.com/AGWA/git-crypt.git"
        - "cd git-crypt"
        - "make"
