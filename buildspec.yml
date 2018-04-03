@@ -22,6 +22,7 @@ phases:
        - "chmod +x ./linux-amd64/helm"
        - "mv ./linux-amd64/helm /usr/local/bin/helm"
        - "apt-get install gnupg"
+       - "git init"
        - "git clone https://github.com/AGWA/git-crypt.git"
        - "cd git-crypt"
        - "make"
