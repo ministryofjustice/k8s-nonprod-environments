@@ -39,6 +39,7 @@ phases:
     commands:
       - "mkdir ~/.kube/"
       - "echo $K8SKEY | base64 --decode > ~/private.key"
+      - "git checkout add-git-crypt"
       - "pwd"
       - "ls -la"
       # - "git branch -a"
