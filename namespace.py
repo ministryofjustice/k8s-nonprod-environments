@@ -13,17 +13,18 @@ for item in dir_namespaces:
   except subprocess.CalledProcessError as e:
     print('exit code 1') 
 
-  print(subprocess.check_output(['kubectl', 'apply', '-f', 'namespaces/' + item, '--namespace=', + item]) )
-  print(subprocess.check_output(['helm', 'init', '--service-account', 'tiller', '--tiller-namespace' + item]) )
+  print(subprocess.check_output(['kubectl', 'apply', '-f', 'namespaces/' + item, '--namespace=' + item]) )
+
+  print(subprocess.check_output(['helm', 'init', '--service-account', 'tiller', '--tiller-namespace', item]) )
 
 for item in k8_json['items']:
   k8_namespaces.append(item['metadata']['name'])
 
-for item in dir_namespaces:
-  k8_namespaces.remove(item)
+# for item in dir_namespaces:
+#   k8_namespaces.remove(item)
 
-for item in default_namespaces:
-  k8_namespaces.remove(item)
+# for item in default_namespaces:
+#   k8_namespaces.remove(item)
 
 # for item in k8_namespaces:
 #   if item:
