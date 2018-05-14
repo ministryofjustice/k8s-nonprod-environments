@@ -26,11 +26,11 @@ phases:
   pre_build:
     commands:
       - "mkdir ~/.kube/"
-      - "aws s3 cp s3://non-production-cluster-keystore/kubecfg.yaml ~/.kube/config" 
+      - "aws s3 cp s3://test-cluster-keystore/kubecfg.yaml ~/.kube/config" 
   build:
     commands:
       - "kubectl config get-contexts"
-      - "kubectl config use-context non-production.k8s.integration.dsd.io"
+      - "kubectl config use-context cloud-platforms-test.k8s.integration.dsd.io"
       - "kubectl cluster-info"
       - "kubectl get namespaces"
       - "kubectl get pods --all-namespaces"
@@ -38,7 +38,7 @@ phases:
       - "python3 namespace.py"
   post_build:
     commands:
-#       - "ls namespaces/ | while read file; do helm init --service-account $file-tiller --tiller-namespace $file; done"
+      # - "ls namespaces/ | while read file; do helm init --service-account tiller --tiller-namespace $file; done"
 
 #artifacts:
   #files:
